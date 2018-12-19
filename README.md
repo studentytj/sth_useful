@@ -1,5 +1,9 @@
 # sth_useful
 ## 关于ExcelUtil
+> 关于本类线程安全性的解释：
+ 多数工具方法不涉及共享变量问题，至于添加合并单元格方法addMergeArea，使用ThreadLocal变量存储合并数据，ThreadLocal内部借用Thread.ThreadLocalMap以当前ThreadLocal为key进行存储，设置一次变量，则其他线程也会有上次数据的残留，因此在addMergeArea方法中进行清空的操作。为了保证原子性, 采用ReentrantLock确保一次只有一个线程可以进行添加合并数据的操作。
+  线程安全性从以上两个方面保证。
+  水平有限，难免会有疏漏，敬请谅解。
 > 主要使用Apache POI进行Excel的导入、导出
 ### 使用
 
